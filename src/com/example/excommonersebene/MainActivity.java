@@ -166,7 +166,6 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 				final CharSequence[] items={"141-NTC-Board Cascade", "dfgdsfig"}; 
 				 
 				AlertDialog ad = new AlertDialog.Builder(this)
-				.setMessage("Blah blah blah.\n Fine pring.\n Do you accept all our terms and conditions?")
 				.setIcon(R.drawable.ic_launcher)
 				.setTitle("Select your bus")
 				.setItems(items, new DialogInterface.OnClickListener() {
@@ -179,10 +178,8 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 				})
 				.setCancelable(false)
 				.create();
-				
 				ad.show();
-				
-				
+
 			}
 		}
 		return true;

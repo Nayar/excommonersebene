@@ -12,7 +12,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -82,13 +81,14 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		bustops.add(b7 = new BusStop(7,-20.229226, 57.503385));
 
 		bustops.add(b8 = new BusStop(8,-20.243586, 57.488906));
-		routes.add(r1 = new Route(1));
-		routes.add(r2 = new Route(2));
+		routes.add(r1 = new Route(141,"Port Louis","Bord Cascade"));
+		routes.add(r2 = new Route(173,"Curepipe","St-Pierre"));
 		r1.addBusStop(b1);
 		r1.addBusStop(b2);
 		r1.addBusStop(b3);
 		r2.addBusStop(b4);
 		r2.addBusStop(b5);
+		r1.addBusStop(b5);
 		r1.addBusStop(b6);
 		r1.addBusStop(b7);
 		r1.addBusStop(b8);
@@ -160,10 +160,13 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		for(int i = 0;i<meraMarker.length;i++){
 			if(marker.equals(meraMarker[i])){
 				BusStop bs = bustops.get(i);
-				//ArrayList<Route> passingroutes = bustops.getRoutes(routes);
+				ArrayList<Route> passingroutes = bustops.get(i).getRoutes(routes);
 				 context = getApplicationContext();
 				
-				final CharSequence[] items={"141-NTC-Board Cascade", "dfgdsfig"}; 
+				final CharSequence[] items= new CharSequence[passingroutes.size()];
+				for(int j = 0;j<passingroutes.size();j++){
+					items[j] = passingroutes.get(j).no + " " + passingroutes.get(j).from + " " + passingroutes.get(j).to;
+				}
 				 
 				AlertDialog ad = new AlertDialog.Builder(this)
 				.setIcon(R.drawable.ic_launcher)

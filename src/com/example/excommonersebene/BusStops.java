@@ -8,7 +8,7 @@ public class BusStops {
 			head = new BusStop(id,x,y);
 			return;
 		}
-		BusStop current = head.next;
+		BusStop current = head;
 		while(current.next != null){
 			current = current.next;
 		}

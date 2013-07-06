@@ -88,10 +88,16 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		r1.addBusStop(b1);
 		r1.addBusStop(b2);
 		r1.addBusStop(b3);
+		r4.addBusStop(b1);
 		r2.addBusStop(b4);
 		r2.addBusStop(b5);
+		r4.addBusStop(b2);
+		r4.addBusStop(b8);
+		r4.addBusStop(b7);
+		r4.addBusStop(b6);
 		r1.addBusStop(b5);
 		r1.addBusStop(b6);
+		r3.addBusStop(b7);
 		r1.addBusStop(b7);
 		r1.addBusStop(b8);
 		

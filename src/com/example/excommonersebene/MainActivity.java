@@ -13,20 +13,26 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
 import android.widget.Toast;
 
 import com.example.excommonersebenelib.*;
 
-public class MainActivity extends Activity implements OnMarkerClickListener{
+public class MainActivity extends Activity implements OnMarkerClickListener,DialogInterface.OnClickListener{
 
 	private GoogleMap map;
 	private final LatLng location_maritiusLatLng = new LatLng(-20.24347755, 57.49033743);
 	Marker[] meraMarker;
 	ArrayList<BusStop> bustops;
 	ArrayList<Route> routes;
+	Context context;
+	CharSequence text;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,16 +97,72 @@ public class MainActivity extends Activity implements OnMarkerClickListener{
 			if(marker.equals(meraMarker[i])){
 				BusStop bs = bustops.get(i);
 				//ArrayList<Route> passingroutes = bustops.getRoutes(routes);
-				Context context = getApplicationContext();
-				CharSequence text = "Selected!";
+				 context = getApplicationContext();
+				
+				 
+				AlertDialog ad = new AlertDialog.Builder(this)
+				.setMessage("Blah blah blah.\n Fine pring.\n Do you accept all our terms and conditions?")
+				.setIcon(R.drawable.ic_launcher)
+				.setTitle("Terms of Service")
+				.setPositiveButton("Yes", this)
+				.setNegativeButton("No", this)
+				.setNeutralButton("Cancel", this)
+				.setCancelable(false)
+				.create();
+				
+				ad.show();
+				
+				 text = "Selected!";	
 				int duration = Toast.LENGTH_SHORT;
 				Toast toast = Toast.makeText(context, text, duration);
 				toast.show();
+				
+				
 			}
 		}
 		return true;
 		
 	}
 	
+	
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        // Use the Builder class for convenient dialog construction
+	        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+	        builder.setMessage(R.string.dialog_title)
+	               .setPositiveButton(R.string.dialog_true, new DialogInterface.OnClickListener() {
+	                   public void onClick(DialogInterface dialog, int id) {
+	                       
+	                   }
+	               })
+	               .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+	                   public void onClick(DialogInterface dialog, int id) {
+	                       // User cancelled the dialog
+	                   }
+	               });
+	        // Create the AlertDialog object and return it
+	        return builder.create();
+	    }
 
+		@Override
+		public void onClick(DialogInterface dialog, int which) {
+			
+				// TODO Auto-generated method stub
+				switch(which){
+				case DialogInterface.BUTTON_POSITIVE: // yes
+					text="You have accepted the TOS. Welcom to the site";
+					break;
+				case DialogInterface.BUTTON_NEGATIVE: // no
+					text="You have denied the TOS. You may not access the site";
+					break;
+				case DialogInterface.BUTTON_NEUTRAL: // neutral
+					text="Please select yes or no";
+					break;
+				default:
+					// nothing
+					break;
+				}
+			
+			
+		}
+	
 }

@@ -1,6 +1,7 @@
 package com.example.excommonersebene;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -11,6 +12,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,18 +25,20 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
 import com.example.excommonersebenelib.*;
 
-public class MainActivity extends Activity implements OnMarkerClickListener,DialogInterface.OnClickListener{
+public class MainActivity extends Activity implements LocationListener,OnMarkerClickListener,DialogInterface.OnClickListener{
 
 	private GoogleMap map;
 	private final LatLng location_maritiusLatLng = new LatLng(-20.24347755, 57.49033743);
 	Marker[] meraMarker;
 	ArrayList<BusStop> bustops;
 	ArrayList<Route> routes;
+	 MarkerDataSource data;
 	Context context;
 	CharSequence text;
 	
@@ -40,6 +48,8 @@ public class MainActivity extends Activity implements OnMarkerClickListener,Dial
 		setContentView(R.layout.activity_main);
 		
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+		
+		map.setMyLocationEnabled(true);
 		
 		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 15);
 		map.animateCamera(update);
@@ -95,6 +105,45 @@ public class MainActivity extends Activity implements OnMarkerClickListener,Dial
 		
 		//CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 15);
 		//map.animateCamera(update);
+		
+		
+		  LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+	        String provider = lm.getBestProvider(new Criteria(), true);
+	        
+	        if (provider == null) {
+	            onProviderDisabled(provider);
+	        }
+	        data = new MarkerDataSource(context);
+	        try {
+	           data.open();
+	           
+	        } catch (Exception e) {
+	            Log.i("hello", "hello");
+	        }
+	       
+	        //marker
+	        List<MyMarkerObj> m = data.getMyMarkers();
+	        for (int i = 0; i < m.size(); i++) {
+	            String[] slatlng =  m.get(i).getPosition().split(" ");
+	            LatLng lat = new LatLng(Double.valueOf(slatlng[0]), Double.valueOf(slatlng[1]));
+	            map.addMarker(new MarkerOptions()
+	                    .title(m.get(i).getTitle())
+	                    .snippet(m.get(i).getSnippet())
+	                    .position(lat)
+	                    );
+	            
+	        }
+	        
+	        //add marker
+	        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+	            public void onInfoWindowClick(Marker marker) {
+	                marker.remove();
+	                data.deleteMarker(new MyMarkerObj(marker.getTitle(), marker.getSnippet(), marker.getPosition().latitude + " " + marker.getPosition().longitude));
+	            }
+	        });
+	        
+	        
 	}
 
 	@Override
@@ -174,6 +223,30 @@ public class MainActivity extends Activity implements OnMarkerClickListener,Dial
 					break;
 				}
 			
+			
+		}
+
+		@Override
+		public void onLocationChanged(Location location) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
 			
 		}
 	

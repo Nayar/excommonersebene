@@ -19,7 +19,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
@@ -111,8 +110,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		                    .title(m.get(i).getTitle())
 		                    .snippet(m.get(i).getSnippet())
 		                    .position(lat)
-		                    );
-		            
+		                    );         
 		        }
 	           
 	        } catch (Exception e) {
@@ -127,8 +125,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 	                data.deleteMarker(new MyMarkerObj(marker.getTitle(), marker.getSnippet(), marker.getPosition().latitude + " " + marker.getPosition().longitude));
 	            }
 	        });
-	        
-	        
+        
 	}
 
 	@Override
@@ -141,7 +138,6 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 	public  boolean onMarkerClick (Marker marker){
 		for(int i = 0;i<meraMarker.length;i++){
 			if(marker.equals(meraMarker[i])){
-				BusStop bs = bustops.get(i);
 				ArrayList<Route> passingroutes = bustops.get(i).getRoutes(routes);
 				 context = getApplicationContext();
 				

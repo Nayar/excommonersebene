@@ -41,6 +41,9 @@ public class MainActivity extends Activity implements OnMarkerClickListener,Dial
 		
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 		
+		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 15);
+		map.animateCamera(update);
+		
 		/*BusStops bustops = new BusStops();
 		bustops.add(1,20.1625, 58.2903);
 		bustops.add(2,5, 5);
@@ -112,7 +115,7 @@ public class MainActivity extends Activity implements OnMarkerClickListener,Dial
 				AlertDialog ad = new AlertDialog.Builder(this)
 				.setMessage("Blah blah blah.\n Fine pring.\n Do you accept all our terms and conditions?")
 				.setIcon(R.drawable.ic_launcher)
-				.setTitle("Terms of Service")
+				.setTitle("Select your bus")
 				.setPositiveButton("Yes", this)
 				.setNegativeButton("No", this)
 				.setNeutralButton("Cancel", this)

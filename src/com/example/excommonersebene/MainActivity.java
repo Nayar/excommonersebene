@@ -163,23 +163,24 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 				//ArrayList<Route> passingroutes = bustops.getRoutes(routes);
 				 context = getApplicationContext();
 				
+				final CharSequence[] items={"141-NTC-Board Cascade", "dfgdsfig"}; 
 				 
 				AlertDialog ad = new AlertDialog.Builder(this)
 				.setMessage("Blah blah blah.\n Fine pring.\n Do you accept all our terms and conditions?")
 				.setIcon(R.drawable.ic_launcher)
 				.setTitle("Select your bus")
-				.setPositiveButton("Yes", this)
-				.setNegativeButton("No", this)
-				.setNeutralButton("Cancel", this)
+				.setItems(items, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
+					}
+				})
 				.setCancelable(false)
 				.create();
 				
 				ad.show();
-				
-				 text = "Selected!";	
-				int duration = Toast.LENGTH_SHORT;
-				Toast toast = Toast.makeText(context, text, duration);
-				toast.show();
 				
 				
 			}

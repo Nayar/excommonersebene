@@ -116,23 +116,26 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 	        data = new MarkerDataSource(context);
 	        try {
 	           data.open();
+	           List<MyMarkerObj> m = data.getMyMarkers();
+		        for (int i = 0; i < m.size(); i++) {
+		            String[] slatlng =  m.get(i).getPosition().split(" ");
+		            LatLng lat = new LatLng(Double.valueOf(slatlng[0]), Double.valueOf(slatlng[1]));
+		            //LatLng lat = new LatLng(0,0);
+		            map.addMarker(new MarkerOptions()
+		                    .title(m.get(i).getTitle())
+		                    .snippet(m.get(i).getSnippet())
+		                    .position(lat)
+		                    );
+		            
+		        }
 	           
 	        } catch (Exception e) {
 	            Log.i("hello", "hello");
 	        }
 	       
 	        //marker
-	        List<MyMarkerObj> m = data.getMyMarkers();
-	        for (int i = 0; i < m.size(); i++) {
-	            String[] slatlng =  m.get(i).getPosition().split(" ");
-	            LatLng lat = new LatLng(Double.valueOf(slatlng[0]), Double.valueOf(slatlng[1]));
-	            map.addMarker(new MarkerOptions()
-	                    .title(m.get(i).getTitle())
-	                    .snippet(m.get(i).getSnippet())
-	                    .position(lat)
-	                    );
-	            
-	        }
+	        
+	    
 	        
 	        //add marker
 	        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {

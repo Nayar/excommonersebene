@@ -63,8 +63,8 @@ public class MainActivity extends Activity implements OnMarkerClickListener{
 		bustops.add(b7 = new BusStop(7,-20.229226, 57.503385));
 
 		bustops.add(b8 = new BusStop(8,-20.243586, 57.488906));
-		r1 = new Route(1);
-		r2 = new Route(2);
+		routes.add(r1 = new Route(1));
+		routes.add(r2 = new Route(2));
 		r1.addBusStop(b1);
 		r1.addBusStop(b2);
 		r1.addBusStop(b3);
@@ -73,6 +73,7 @@ public class MainActivity extends Activity implements OnMarkerClickListener{
 		r1.addBusStop(b6);
 		r1.addBusStop(b7);
 		r1.addBusStop(b8);
+		
 		
 		map.setOnMarkerClickListener(this);
 		

@@ -50,7 +50,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		
 		map.setMyLocationEnabled(true);
 		
-		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 15);
+		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 14);
 		map.animateCamera(update);
 		
 		/*BusStops bustops = new BusStops();
@@ -67,7 +67,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		}*/
 		
 		BusStop b1,b2,b3,b4,b5,b6,b7,b8;
-		Route r1,r2,r3;
+		Route r1,r2,r3,r4;
 		routes = new ArrayList<Route>();
 		bustops = new ArrayList<BusStop>();
 		bustops.add(b1 = new BusStop(1, -20.23215, 57.498530));
@@ -83,6 +83,8 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		bustops.add(b8 = new BusStop(8,-20.243586, 57.488906));
 		routes.add(r1 = new Route(141,"Port Louis","Bord Cascade"));
 		routes.add(r2 = new Route(173,"Curepipe","St-Pierre"));
+		routes.add(r3 = new Route(198,"Port Louis","Maheborg"));
+		routes.add(r4 = new Route(222,"Rose-Hill","Rempart"));
 		r1.addBusStop(b1);
 		r1.addBusStop(b2);
 		r1.addBusStop(b3);
@@ -169,7 +171,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 				}
 				 
 				AlertDialog ad = new AlertDialog.Builder(this)
-				.setIcon(R.drawable.ic_launcher)
+				.setIcon(R.drawable.map_ic)
 				.setTitle("Select your bus")
 				.setItems(items, new DialogInterface.OnClickListener() {
 					
@@ -179,7 +181,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 						Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
 					}
 				})
-				.setCancelable(false)
+				.setCancelable(true)
 				.create();
 				ad.show();
 

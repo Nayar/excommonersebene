@@ -5,21 +5,28 @@ import java.util.ArrayList;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.example.excommonersebenelib.*;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnMarkerClickListener{
 
 	private GoogleMap map;
 	private final LatLng location_maritiusLatLng = new LatLng(-20.24347755, 57.49033743);
+	Marker[] meraMarker;
+	ArrayList<BusStop> bustops;
+	ArrayList<Route> routes;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +50,8 @@ public class MainActivity extends Activity {
 		
 		BusStop b1,b2,b3,b4,b5,b6,b7,b8;
 		Route r1,r2,r3;
-		ArrayList<Route> routes = new ArrayList<Route>();
-		ArrayList<BusStop> bustops = new ArrayList<BusStop>();
+		routes = new ArrayList<Route>();
+		bustops = new ArrayList<BusStop>();
 		bustops.add(b1 = new BusStop(1, -20.23215, 57.498530));
 		bustops.add(b2 = new BusStop(2, -20.232498, 57.497736));
 		bustops.add(b3 = new BusStop(3, -20.242982, 57.491942));
@@ -59,9 +66,11 @@ public class MainActivity extends Activity {
 		r1 = new Route(1);
 		r2 = new Route(2);
 		//r1.addBusStop(b1);
+		map.setOnMarkerClickListener(this);
 		
+		meraMarker = new Marker[bustops.size()];
 		for(int i = 0;i<bustops.size();i++){
-			map.addMarker(new MarkerOptions().position(new LatLng(bustops.get(i).x, bustops.get(i).y)).title("Bus Stop here"));
+			meraMarker[i] = map.addMarker(new MarkerOptions().position(new LatLng(bustops.get(i).x, bustops.get(i).y)).title("Bus Stop here"));
 		}
 		//MeraDatabase mDbHelper = new MeraDatabase(getBaseContext());
 		//SQLiteDatabase db = MeraDatabase.;
@@ -76,5 +85,22 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	public  boolean onMarkerClick (Marker marker){
+		for(int i = 0;i<meraMarker.length;i++){
+			if(marker.equals(meraMarker[i])){
+				BusStop bs = bustops.get(i);
+				//ArrayList<Route> passingroutes = bustops.getRoutes(routes);
+				Context context = getApplicationContext();
+				CharSequence text = "Selected!";
+				int duration = Toast.LENGTH_SHORT;
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();
+			}
+		}
+		return true;
+		
+	}
+	
 
 }

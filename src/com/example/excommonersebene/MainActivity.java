@@ -10,6 +10,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		BusStops bustops = new BusStops();
+		bustops.add(1,-25.4545, 5.125);
 	}
 
 	@Override

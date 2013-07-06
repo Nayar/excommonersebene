@@ -4,5 +4,9 @@
     <string name="app_name">excommonersebene</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+     <string name="dialog_title">Select Bus</string>
+    <string name="dialog_message">Selected</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_true">Okie</string>
 
 </resources>

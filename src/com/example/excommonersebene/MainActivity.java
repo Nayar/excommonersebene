@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
+import android.util.MonthDisplayHelper;
 import android.view.Menu;
 import android.widget.Toast;
 
@@ -49,7 +50,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();	
 		map.setMyLocationEnabled(true);
 		
-		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 14);
+		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 18);
 		map.animateCamera(update);
 		
 		BusStop b1,b2,b3,b4,b5,b6,b7,b8;
@@ -91,10 +92,8 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		r1.addBusStop(b8);
 		
 		r3.addBus(bus1 = new Bus("2000 JN 09",-20.24192,57.492865));
-		r3.addBus(bus2 = new Bus("2456 FB 09",-20.24192,57.492866));
-		r1.addBus(bus3 = new Bus("9854 AP 11"));
-		r3.addBus(bus4 = new Bus("1254 DC 12",-20.242871,57.491846));
-		r4.addBus(bus5 = new Bus("5220 JN 02"));
+		//r3.addBus(bus2 = new Bus("2456 FB 09",-20.24192,57.492866));
+		//r3.addBus(bus4 = new Bus("1254 DC 12",-20.242871,57.491846));
 		
 		map.setOnMarkerClickListener(this);
 		
@@ -168,16 +167,12 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 						//Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
 						for(int k = 0;k<passingroutes.get(which).buses.size();k++){
 							
-							new MeraMarker(passingroutes.get(which).buses.get(k));
-							Toast.makeText(context, "New mark", Toast.LENGTH_SHORT).show();
+							MeraMarker mm = new MeraMarker(passingroutes.get(which).buses.get(k));
+							//Toast.makeText(context, "New mark", Toast.LENGTH_SHORT).show();
 							Double[][] movement = {{-20.24192,57.492865},{-20.241945,57.492715},{-20.241975,57.49249},{-20.241996,57.492302},{-20.242006,57.492168},{-20.242016,57.492109},{-20.242121,57.492071},{-20.242197,57.492001},{-20.242227,57.491916},{-20.242252,57.49183},{-20.242298,57.491835}
 							,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
 							for(int l = 0;l<movement.length;l++){
-								//Toast.makeText(context, "Sleeping", Toast.LENGTH_SHORT).show();
-								//Toast.makeText(context, "Changing location", Toast.LENGTH_SHORT).show();
-								bus1.setLocation(movement[l][0],movement[l][1]);
-								new MeraMarker(bus1);
-								//System.out.print("xD :P");
+								//bus1.setLocation(movement[l][0],movement[l][1]);
 							}
 						}
 					}
@@ -225,6 +220,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		
 		public class MeraMarker implements MeraListener{
 			Bus b;
+			Marker m;
 			public MeraMarker(Bus b) {
 				this.b = b;
 				map.addMarker(new MarkerOptions()
@@ -232,11 +228,13 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus1))
                 .position(b.geoPoint)
                 );
+				//m.remove();
 			}
 			
 			@Override
 			public void update() {
 				// TODO Auto-generated method stub
+				//m.remove();
 				map.addMarker(new MarkerOptions()
                 .title(b.id)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus1))

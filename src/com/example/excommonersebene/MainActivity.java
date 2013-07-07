@@ -8,6 +8,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -173,7 +174,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 							,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
 							for(int l = 0;l<movement.length;l++){
 								//Toast.makeText(context, "Sleeping", Toast.LENGTH_SHORT).show();
-								Toast.makeText(context, "Changing location", Toast.LENGTH_SHORT).show();
+								//Toast.makeText(context, "Changing location", Toast.LENGTH_SHORT).show();
 								bus1.setLocation(movement[l][0],movement[l][1]);
 								new MeraMarker(bus1);
 								//System.out.print("xD :P");
@@ -228,6 +229,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 				this.b = b;
 				map.addMarker(new MarkerOptions()
                 .title(b.id)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus1))
                 .position(b.geoPoint)
                 );
 			}
@@ -237,6 +239,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 				// TODO Auto-generated method stub
 				map.addMarker(new MarkerOptions()
                 .title(b.id)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus1))
                 .position(b.geoPoint)
                 );
 			}

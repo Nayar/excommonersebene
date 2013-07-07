@@ -18,6 +18,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -168,11 +169,15 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 						for(int k = 0;k<passingroutes.get(which).buses.size();k++){
 							
 							MeraMarker mm = new MeraMarker(passingroutes.get(which).buses.get(k));
+							Toast.makeText(context, "Displaying initially", Toast.LENGTH_SHORT).show();
 							//Toast.makeText(context, "New mark", Toast.LENGTH_SHORT).show();
 							Double[][] movement = {{-20.24192,57.492865},{-20.241945,57.492715},{-20.241975,57.49249},{-20.241996,57.492302},{-20.242006,57.492168},{-20.242016,57.492109},{-20.242121,57.492071},{-20.242197,57.492001},{-20.242227,57.491916},{-20.242252,57.49183},{-20.242298,57.491835}
 							,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
+							bus1.addListener(mm);
 							for(int l = 0;l<movement.length;l++){
-								//bus1.setLocation(movement[l][0],movement[l][1]);
+								Toast.makeText(context, "Looping", Toast.LENGTH_SHORT).show();
+								bus1.setLocation(movement[l][0],movement[l][1]);
+								//SystemClock.sleep(1000);
 							}
 						}
 					}
@@ -220,10 +225,10 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		
 		public class MeraMarker implements MeraListener{
 			Bus b;
-			Marker m;
+			Marker mark;
 			public MeraMarker(Bus b) {
 				this.b = b;
-				map.addMarker(new MarkerOptions()
+				mark = map.addMarker(new MarkerOptions()
                 .title(b.id)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus1))
                 .position(b.geoPoint)
@@ -234,8 +239,8 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 			@Override
 			public void update() {
 				// TODO Auto-generated method stub
-				//m.remove();
-				map.addMarker(new MarkerOptions()
+				mark.remove();
+				mark = map.addMarker(new MarkerOptions()
                 .title(b.id)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus1))
                 .position(b.geoPoint)

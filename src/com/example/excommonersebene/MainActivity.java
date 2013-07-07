@@ -87,6 +87,13 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		r1.addBusStop(b7);
 		r1.addBusStop(b8);
 		
+		Bus bus1,bus2,bus3,bus4,bus5;
+		r3.addBus(bus1 = new Bus("2000 JN 09",-20.24192,57.492865));
+		r3.addBus(bus2 = new Bus("2456 FB 09",-20.24192,58.492865));
+		r1.addBus(bus3 = new Bus("9854 AP 11"));
+		r3.addBus(bus4 = new Bus("1254 DC 12",-20.242871,57.491846));
+		r4.addBus(bus5 = new Bus("5220 JN 02"));
+		
 		map.setOnMarkerClickListener(this);
 		
 		meraMarker = new Marker[bustops.size()];
@@ -140,7 +147,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 	public  boolean onMarkerClick (Marker marker){
 		for(int i = 0;i<meraMarker.length;i++){
 			if(marker.equals(meraMarker[i])){
-				ArrayList<Route> passingroutes = bustops.get(i).getRoutes(routes);
+				final ArrayList<Route> passingroutes = bustops.get(i).getRoutes(routes);
 				 context = getApplicationContext();
 				
 				final CharSequence[] items= new CharSequence[passingroutes.size()];
@@ -157,6 +164,12 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
+						for(int k = 0;k<passingroutes.get(which).buses.size();k++){
+							map.addMarker(new MarkerOptions()
+		                    .title(passingroutes.get(which).buses.get(k).id)
+		                    .position(passingroutes.get(which).buses.get(k).geoPoint)
+		                    );
+						}
 					}
 				})
 				.setCancelable(true)

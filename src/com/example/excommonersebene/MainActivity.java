@@ -18,6 +18,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -41,7 +42,10 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 	MarkerDataSource data;
 	Context context;
 	CharSequence text;
+	int lol = 0;
 	Bus bus1,bus2,bus3,bus4,bus5;
+	Double[][] movement = {{-20.24192,57.492865},{-20.241945,57.492715},{-20.241975,57.49249},{-20.241996,57.492302},{-20.242006,57.492168},{-20.242016,57.492109},{-20.242121,57.492071},{-20.242197,57.492001},{-20.242227,57.491916},{-20.242252,57.49183},{-20.242298,57.491835}
+	,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -171,14 +175,43 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 							MeraMarker mm = new MeraMarker(passingroutes.get(which).buses.get(k));
 							Toast.makeText(context, "Displaying initially", Toast.LENGTH_SHORT).show();
 							//Toast.makeText(context, "New mark", Toast.LENGTH_SHORT).show();
-							Double[][] movement = {{-20.24192,57.492865},{-20.241945,57.492715},{-20.241975,57.49249},{-20.241996,57.492302},{-20.242006,57.492168},{-20.242016,57.492109},{-20.242121,57.492071},{-20.242197,57.492001},{-20.242227,57.491916},{-20.242252,57.49183},{-20.242298,57.491835}
-							,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
+							
 							bus1.addListener(mm);
+							
+							
 							for(int l = 0;l<movement.length;l++){
+								final Handler handler = new Handler();
+								handler.post(new Runnable() {
+						            
+						            @Override
+						            public void run() {
+						            	/*for(int l = 0;l<movement.length;l++){
+											Toast.makeText(context, "Looping", Toast.LENGTH_SHORT).show();
+											bus1.setLocation(movement[l][0],movement[l][1]);
+											//SystemClock.sleep(1000);
+										}*/
+						            	bus1.setLocation(movement[lol][0],movement[lol][1]);
+						            	//lol = lol + 1;
+						            	//Toast.makeText(context, "Looping" + movement[lol][0], Toast.LENGTH_SHORT).show();
+						            	lol = lol + 1;
+						            	//SystemClock.sleep(2000);
+						            	map.addMarker(new MarkerOptions()
+						                .title(bus1.id)
+						                .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus1))
+						                .position(bus1.geoPoint)
+						                );
+						            	//for(int m=0;m<200000000;m++);
+						            }
+						        });
+								//SystemClock.sleep(1000);
+							}
+					        
+					        
+							/*for(int l = 0;l<movement.length;l++){
 								Toast.makeText(context, "Looping", Toast.LENGTH_SHORT).show();
 								bus1.setLocation(movement[l][0],movement[l][1]);
 								//SystemClock.sleep(1000);
-							}
+							}*/
 						}
 					}
 				})
@@ -239,7 +272,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 			@Override
 			public void update() {
 				// TODO Auto-generated method stub
-				mark.remove();
+				//mark.remove();
 				mark = map.addMarker(new MarkerOptions()
                 .title(b.id)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.bus1))

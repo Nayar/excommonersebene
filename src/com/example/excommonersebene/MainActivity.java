@@ -165,10 +165,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 						// TODO Auto-generated method stub
 						Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
 						for(int k = 0;k<passingroutes.get(which).buses.size();k++){
-							map.addMarker(new MarkerOptions()
-		                    .title(passingroutes.get(which).buses.get(k).id)
-		                    .position(passingroutes.get(which).buses.get(k).geoPoint)
-		                    );
+							new MeraMarker(passingroutes.get(which).buses.get(k));
 						}
 					}
 				})
@@ -210,6 +207,27 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 			// TODO Auto-generated method stub
+			
+		}
+		
+		public class MeraMarker implements MeraListener{
+			Bus x;
+			public MeraMarker(Bus x) {
+				this.x = x;
+				map.addMarker(new MarkerOptions()
+                .title(x.id)
+                .position(x.geoPoint)
+                );
+			}
+			
+			@Override
+			public void update() {
+				// TODO Auto-generated method stub
+				map.addMarker(new MarkerOptions()
+                .title(x.id)
+                .position(x.geoPoint)
+                );
+			}
 			
 		}
 	

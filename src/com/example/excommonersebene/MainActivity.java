@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
@@ -34,9 +35,10 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 	Marker[] meraMarker;
 	ArrayList<BusStop> bustops;
 	ArrayList<Route> routes;
-	 MarkerDataSource data;
+	MarkerDataSource data;
 	Context context;
 	CharSequence text;
+	Bus bus1,bus2,bus3,bus4,bus5;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,6 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		r1.addBusStop(b7);
 		r1.addBusStop(b8);
 		
-		Bus bus1,bus2,bus3,bus4,bus5;
 		r3.addBus(bus1 = new Bus("2000 JN 09",-20.24192,57.492865));
 		r3.addBus(bus2 = new Bus("2456 FB 09",-20.24192,58.492865));
 		r1.addBus(bus3 = new Bus("9854 AP 11"));
@@ -165,7 +166,28 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 						// TODO Auto-generated method stub
 						Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
 						for(int k = 0;k<passingroutes.get(which).buses.size();k++){
+							
 							new MeraMarker(passingroutes.get(which).buses.get(k));
+							
+							Thread logotimer = new Thread(){
+								public void run(){
+									try {
+										sleep(2000);
+										bus1.setLocation(-20.242298,57.491835);
+									} 
+									catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
+									finally{
+										
+									}
+									
+								}
+							};
+							logotimer.start();
+
 						}
 					}
 				})

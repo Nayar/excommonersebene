@@ -164,30 +164,19 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
+						//Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
 						for(int k = 0;k<passingroutes.get(which).buses.size();k++){
 							
 							new MeraMarker(passingroutes.get(which).buses.get(k));
-							
-							Thread logotimer = new Thread(){
-								public void run(){
-									try {
-										sleep(2000);
-										bus1.setLocation(-20.242298,57.491835);
-									} 
-									catch (InterruptedException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-									
-									finally{
-										
-									}
-									
-								}
-							};
-							logotimer.start();
-
+							Toast.makeText(context, "New mark", Toast.LENGTH_SHORT).show();
+							Double[][] movement = new Double[20][2];
+							for(int l = 0;l<movement.length;l++){
+								//Toast.makeText(context, "Sleeping", Toast.LENGTH_SHORT).show();
+								Toast.makeText(context, "Changing location", Toast.LENGTH_SHORT).show();
+								bus1.setLocation(-20.242524,57.49184);
+								new MeraMarker(bus1);
+								//System.out.print("xD :P");
+							}
 						}
 					}
 				})
@@ -233,12 +222,12 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		}
 		
 		public class MeraMarker implements MeraListener{
-			Bus x;
-			public MeraMarker(Bus x) {
-				this.x = x;
+			Bus b;
+			public MeraMarker(Bus b) {
+				this.b = b;
 				map.addMarker(new MarkerOptions()
-                .title(x.id)
-                .position(x.geoPoint)
+                .title(b.id)
+                .position(b.geoPoint)
                 );
 			}
 			
@@ -246,8 +235,8 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 			public void update() {
 				// TODO Auto-generated method stub
 				map.addMarker(new MarkerOptions()
-                .title(x.id)
-                .position(x.geoPoint)
+                .title(b.id)
+                .position(b.geoPoint)
                 );
 			}
 			

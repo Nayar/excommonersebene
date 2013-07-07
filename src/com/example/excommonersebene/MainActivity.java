@@ -56,7 +56,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();	
 		map.setMyLocationEnabled(true);
 		
-		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 16);
+		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 14);
 		map.animateCamera(update);
 		
 		BusStop b1,b2,b3,b4,b5,b6,b7,b8;
@@ -186,6 +186,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		Double[][] movement = {{-20.24192,57.492865},{-20.241945,57.492715},{-20.241975,57.49249},{-20.241996,57.492302},{-20.242006,57.492168},{-20.242016,57.492109},{-20.242121,57.492071},{-20.242197,57.492001},{-20.242227,57.491916},{-20.242252,57.49183},{-20.242298,57.491835}
 		,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
 		bus1.setLocation(movement[0][0],movement[0][1]);
+		new MeraMarker(bus1);
 	}
 	
 	private void HurryMenuItem(){
@@ -195,6 +196,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		Double[][] movement = {{-20.24192,57.492865},{-20.241945,57.492715},{-20.241975,57.49249},{-20.241996,57.492302},{-20.242006,57.492168},{-20.242016,57.492109},{-20.242121,57.492071},{-20.242197,57.492001},{-20.242227,57.491916},{-20.242252,57.49183},{-20.242298,57.491835}
 		,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
 		bus1.setLocation(movement[0][0],movement[0][1]);
+		new MeraMarker(bus1);
 	}
 	
 	public  boolean onMarkerClick (Marker marker){
@@ -217,18 +219,18 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
 						Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
-						for(int k = 0;k<passingroutes.get(which).buses.size();k++){
+						/*for(int k = 0;k<passingroutes.get(which).buses.size();k++){
 							
 							new MeraMarker(passingroutes.get(which).buses.get(k));
 
 							Double[][] movement = {{-20.24192,57.492865},{-20.241945,57.492715},{-20.241975,57.49249},{-20.241996,57.492302},{-20.242006,57.492168},{-20.242016,57.492109},{-20.242121,57.492071},{-20.242197,57.492001},{-20.242227,57.491916},{-20.242252,57.49183},{-20.242298,57.491835}
 							,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
-							/*for(int l = 0;l<movement.length;l++){
+							for(int l = 0;l<movement.length;l++){
 								bus1.setLocation(movement[l][0],movement[l][1]);
 								new MeraMarker(bus1);
-							}*/
+							}
 							
-						}
+						}*/
 					}
 				})
 				.setCancelable(true)

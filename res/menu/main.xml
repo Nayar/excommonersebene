@@ -1,9 +1,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
+    <item android:id="@+id/Alarm"
+        android:orderInCategory="1"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="Alarm" 
+        android:menuCategory="secondary">
+    </item>
+    
+    
+    
+    <item
+        android:id="@+id/Hurry"
+        android:orderInCategory="2"
+        android:showAsAction="never"
+        android:title="Hurry" 
+        android:menuCategory="secondary">
+    </item>
+    
 
 </menu>

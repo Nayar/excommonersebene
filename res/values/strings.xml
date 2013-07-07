@@ -8,5 +8,7 @@
     <string name="dialog_message">Selected</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_true">Okie</string>
+    <string name="settings">Setting</string>
+    
 
 </resources>

@@ -17,14 +17,15 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.excommonersebenelib.*;
@@ -41,15 +42,21 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 	CharSequence text;
 	Bus bus1,bus2,bus3,bus4,bus5;
 	
+	MediaPlayer mpAudioAlarm;
+	MediaPlayer mpAudioHurry;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		mpAudioAlarm = MediaPlayer.create(this, R.raw.alarm);
+		mpAudioHurry = MediaPlayer.create(this, R.raw.hurry);
+		
 		map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();	
 		map.setMyLocationEnabled(true);
 		
-		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 14);
+		CameraUpdate update = CameraUpdateFactory.newLatLngZoom(location_maritiusLatLng, 16);
 		map.animateCamera(update);
 		
 		BusStop b1,b2,b3,b4,b5,b6,b7,b8;
@@ -146,6 +153,50 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 		return true;
 	}
 	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		super.onOptionsItemSelected(item);
+		
+		switch(item.getItemId()){
+		
+		case R.id.Alarm:
+			AlarmMenuItem();
+			break;
+			
+		case R.id.Hurry:
+			HurryMenuItem();
+			break;
+		}
+		return true;
+	}
+	
+	@Override
+	protected void onPause(){
+		super.onPause();
+		mpAudioAlarm.release();
+		mpAudioHurry.release();
+		finish();
+	}
+	
+	
+	private void AlarmMenuItem(){
+		
+		mpAudioAlarm.start();
+		
+		Double[][] movement = {{-20.24192,57.492865},{-20.241945,57.492715},{-20.241975,57.49249},{-20.241996,57.492302},{-20.242006,57.492168},{-20.242016,57.492109},{-20.242121,57.492071},{-20.242197,57.492001},{-20.242227,57.491916},{-20.242252,57.49183},{-20.242298,57.491835}
+		,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
+		bus1.setLocation(movement[0][0],movement[0][1]);
+	}
+	
+	private void HurryMenuItem(){
+		
+		mpAudioHurry.start();
+		
+		Double[][] movement = {{-20.24192,57.492865},{-20.241945,57.492715},{-20.241975,57.49249},{-20.241996,57.492302},{-20.242006,57.492168},{-20.242016,57.492109},{-20.242121,57.492071},{-20.242197,57.492001},{-20.242227,57.491916},{-20.242252,57.49183},{-20.242298,57.491835}
+		,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
+		bus1.setLocation(movement[0][0],movement[0][1]);
+	}
+	
 	public  boolean onMarkerClick (Marker marker){
 		for(int i = 0;i<meraMarker.length;i++){
 			if(marker.equals(meraMarker[i])){
@@ -165,27 +216,24 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						//Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, "Selected: "+items[which], Toast.LENGTH_SHORT).show();
 						for(int k = 0;k<passingroutes.get(which).buses.size();k++){
 							
 							new MeraMarker(passingroutes.get(which).buses.get(k));
-							Toast.makeText(context, "New mark", Toast.LENGTH_SHORT).show();
+
 							Double[][] movement = {{-20.24192,57.492865},{-20.241945,57.492715},{-20.241975,57.49249},{-20.241996,57.492302},{-20.242006,57.492168},{-20.242016,57.492109},{-20.242121,57.492071},{-20.242197,57.492001},{-20.242227,57.491916},{-20.242252,57.49183},{-20.242298,57.491835}
 							,{-20.242489,57.49184},{-20.242524,57.49184},{-20.242594,57.49184},{-20.242594,57.49184},{-20.242665,57.491835},{-20.242665,57.491835},{-20.242796,57.491835},{-20.242871,57.491846},{-20.242871,57.491846}};
-							for(int l = 0;l<movement.length;l++){
-								//Toast.makeText(context, "Sleeping", Toast.LENGTH_SHORT).show();
-								//Toast.makeText(context, "Changing location", Toast.LENGTH_SHORT).show();
+							/*for(int l = 0;l<movement.length;l++){
 								bus1.setLocation(movement[l][0],movement[l][1]);
 								new MeraMarker(bus1);
-								//System.out.print("xD :P");
-							}
+							}*/
+							
 						}
 					}
 				})
 				.setCancelable(true)
 				.create();
 				ad.show();
-
 			}
 		}
 		return true;

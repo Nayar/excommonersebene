@@ -148,7 +148,7 @@ public class MainActivity extends Activity implements LocationListener,OnMarkerC
 				 
 				AlertDialog ad = new AlertDialog.Builder(this)
 				.setIcon(R.drawable.map_ic)
-				.setTitle("Select your bus")
+				.setTitle("#"+ bustops.get(i).id + " : Select your bus")
 				.setItems(items, new DialogInterface.OnClickListener() {
 					
 					@Override
